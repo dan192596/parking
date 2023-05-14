@@ -27,7 +27,7 @@ public interface IMantainanceController<T,K> {
             produces = "application/json")
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
-    public DeferredResult<String> getAllObjectList(@RequestHeader Integer userId, @RequestParam Map<String, Object> queryParams);
+    public DeferredResult<String> getAllObjectList(@RequestParam Map<String, Object> queryParams);
 //    public DeferredResult<Optional<PageDTO<List<T>>>> getAllObjectList(@RequestHeader Integer userId, @RequestParam Map<String, Object> queryParams);
 
     /**
@@ -39,7 +39,7 @@ public interface IMantainanceController<T,K> {
             produces = "application/json")
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
-    public DeferredResult<Optional<T>> getObjectById(@RequestHeader Integer userId, @PathVariable("id") K id);
+    public DeferredResult<Optional<T>> getObjectById(@PathVariable("id") K id);
 
     /**
      * Actualiza un objeto de una tabla a partir de su id
@@ -51,7 +51,7 @@ public interface IMantainanceController<T,K> {
             produces = "application/json")
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
-    public DeferredResult<Optional<T>> updateObjectById(@RequestHeader Integer userId, @PathVariable("id") K id, @RequestBody @Valid T object);
+    public DeferredResult<Optional<T>> updateObjectById( @PathVariable("id") K id, @RequestBody @Valid T object);
 
     /**
      * Elimina un objeto de una tabla a partir de su id
@@ -62,7 +62,7 @@ public interface IMantainanceController<T,K> {
             produces = "application/json")
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
-    public DeferredResult<Optional<T>> deleteObjectById(@RequestHeader Integer userId, @PathVariable("id") K id);
+    public DeferredResult<Optional<T>> deleteObjectById( @PathVariable("id") K id);
 
     /**
      * Inserta un nuevo objeto a una tabla
@@ -73,5 +73,5 @@ public interface IMantainanceController<T,K> {
             produces = "application/json")
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody
-    public DeferredResult<Optional<T>> insertObject(@RequestHeader Integer userId, @RequestBody @Valid T object);
+    public DeferredResult<Optional<T>> insertObject(@RequestBody @Valid T object);
 }

@@ -14,6 +14,6 @@ spring:
       request-timeout: -1
 
   datasource:
-    url: jdbc:mariadb://localhost:3312/console?sslmode=disable
-    username: admin
-    password: wb7WwP1q1z64OUy9jbWR
+    url: jdbc:mysql://localhost:33060/core?sslmode=disable
+    username: root
+    password: test123
