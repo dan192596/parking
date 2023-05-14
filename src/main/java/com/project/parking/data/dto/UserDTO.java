@@ -31,5 +31,4 @@ public class UserDTO {
     private Date registerDatetime;
     private Date updatedDatetime;
     private StatusDTO status;
-    //Falta Status
 }
