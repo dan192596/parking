@@ -1,13 +1,9 @@
 package com.project.parking.dao;
 
-import com.project.parking.dao.behavior.IReservationDao;
-import com.project.parking.dao.behavior.IReservationPayment;
+import com.project.parking.dao.behavior.IReservationPaymentDao;
 import com.project.parking.data.dto.PageDTO;
-import com.project.parking.data.dto.ReservationDTO;
 import com.project.parking.data.dto.ReservationPaymentDTO;
-import com.project.parking.data.dto.UserDTO;
 import com.project.parking.data.entity.ReservationPayment;
-import com.project.parking.data.entity.User;
 import com.project.parking.data.model.DefaultsParamsModel;
 import com.project.parking.data.repository.ReservationPaymentRepository;
 import lombok.NonNull;
@@ -25,7 +21,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-public class ReservationPaymentDao implements IReservationPayment {
+public class ReservationPaymentDao implements IReservationPaymentDao {
 
     @NonNull
     private final ReservationPaymentRepository reservationPaymentRepository;
