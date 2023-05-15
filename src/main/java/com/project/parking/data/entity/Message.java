@@ -25,6 +25,10 @@ public class Message {
     private Date sentDatetime;
 
     @NotNull
+    @Column(name = "user_message")
+    private Boolean userMessage;
+
+    @NotNull
     @ManyToOne
     @JoinColumn(name = "chat_id")
     private Chat chat;

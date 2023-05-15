@@ -66,7 +66,7 @@ public class UserDao implements IUserDao {
             user.setEmail(userDTO.getEmail());
             long time = new Date().getTime();
             user.setUpdatedDatetime(new Date(time));
-
+            userRepository.save(user);
         });
         return userOptional.map(UserDTO::new);
     }
