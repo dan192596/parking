@@ -3,6 +3,7 @@ package com.project.parking.controller;
 import com.google.gson.Gson;
 import com.project.parking.controller.interfaces.IUserController;
 import com.project.parking.data.dto.UserDTO;
+import com.project.parking.data.model.UserModel;
 import com.project.parking.service.behavior.IUserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -77,4 +78,16 @@ public class UserController implements IUserController {
         }
         return result;
     }
+
+    @Override
+    public DeferredResult<Optional<UserDTO>> getObjectByIdentifier(String id) {
+        DeferredResult<Optional<UserDTO>> result = new DeferredResult<>();
+        try{
+            result.setResult(userService.select(id));
+        }catch (Exception e){
+            result.setErrorResult(e.getMessage());
+        }
+        return result;
+    }
+
 }

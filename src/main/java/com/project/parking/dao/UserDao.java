@@ -1,6 +1,7 @@
 package com.project.parking.dao;
 
 import com.project.parking.dao.behavior.IUserDao;
+import com.project.parking.data.defaults.StatusDefault;
 import com.project.parking.data.dto.PageDTO;
 import com.project.parking.data.dto.UserDTO;
 import com.project.parking.data.entity.User;
@@ -22,6 +23,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -29,6 +31,9 @@ public class UserDao implements IUserDao {
 
     @NonNull
     private final UserRepository userRepository;
+
+    @NonNull
+    private final StatusDefault statusDefault;
 
     @Override
     public Optional<UserDTO> select(Long id) {
@@ -93,7 +98,14 @@ public class UserDao implements IUserDao {
         user.setBirthday(userDTO.getBirthday());
         user.setPhone(userDTO.getPhone());
         user.setEmail(userDTO.getEmail());
-        //Asignar estatus habilitado
+        user.setStatus(statusDefault.getEnabled());
+        user.setIdentifier(java.util.UUID.randomUUID().toString());
         return Optional.of(new UserDTO(userRepository.save(user)));
+    }
+
+    @Override
+    public Optional<UserDTO> select(String uuid) {
+        Optional<User> user = userRepository.findByIdentifier(uuid);
+        return user.map(UserDTO::new);
     }
 }

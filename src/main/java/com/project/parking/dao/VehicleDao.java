@@ -1,6 +1,7 @@
 package com.project.parking.dao;
 
 import com.project.parking.dao.behavior.IVehicleDao;
+import com.project.parking.data.defaults.StatusDefault;
 import com.project.parking.data.dto.PageDTO;
 import com.project.parking.data.dto.UserDTO;
 import com.project.parking.data.dto.VehicleDTO;
@@ -35,6 +36,9 @@ public class VehicleDao implements IVehicleDao {
 
     @NonNull
     private final UserRepository userRepository;
+
+    @NonNull
+    private final StatusDefault statusDefault;
 
     @Override
     public Optional<VehicleDTO> select(Long id) {
@@ -101,7 +105,7 @@ public class VehicleDao implements IVehicleDao {
         vehicle.setLine(object.getLine());
         vehicle.setModel(object.getModel());
         vehicle.setUser(userOptional.get());
-        //Asignar status true
+        vehicle.setStatus(statusDefault.getEnabled());
         return Optional.of(new VehicleDTO(vehicleRepository.save(vehicle))) ;
     }
 }

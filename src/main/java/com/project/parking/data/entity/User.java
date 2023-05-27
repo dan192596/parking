@@ -43,6 +43,10 @@ public class User {
     private String  email;
 
     @NotNull
+    @Column(name = "identifier")
+    private String identifier;
+
+    @NotNull
     @Column(name = "register_datetime")
     private Date registerDatetime;
 

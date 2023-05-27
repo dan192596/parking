@@ -43,4 +43,9 @@ public class UserService implements IUserService {
     public Optional<UserDTO> insertObject(UserDTO object) {
         return userDao.insert(object);
     }
+
+    @Override
+    public Optional<UserDTO> select(String uuid) {
+        return userDao.select(uuid);
+    }
 }
