@@ -19,6 +19,7 @@ public class UserDTO {
         this.setRegisterDatetime(user.getRegisterDatetime());
         this.setUpdatedDatetime(user.getUpdatedDatetime());
         this.setStatus(new StatusDTO(user.getStatus()));
+        this.setUuid(user.getIdentifier());
     }
 
     private Long id;
@@ -30,5 +31,6 @@ public class UserDTO {
     private String email;
     private Date registerDatetime;
     private Date updatedDatetime;
+    private String uuid;
     private StatusDTO status;
 }

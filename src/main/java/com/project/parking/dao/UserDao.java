@@ -99,7 +99,7 @@ public class UserDao implements IUserDao {
         user.setPhone(userDTO.getPhone());
         user.setEmail(userDTO.getEmail());
         user.setStatus(statusDefault.getEnabled());
-        user.setIdentifier(java.util.UUID.randomUUID().toString());
+        user.setIdentifier(userDTO.getUuid());
         return Optional.of(new UserDTO(userRepository.save(user)));
     }
 
