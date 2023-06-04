@@ -1,6 +1,8 @@
 package com.project.parking.data.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -46,11 +48,11 @@ public class User {
     @Column(name = "identifier")
     private String identifier;
 
-    @NotNull
+    @Generated(GenerationTime.INSERT)
     @Column(name = "register_datetime")
     private Date registerDatetime;
 
-    @NotNull
+    @Generated(GenerationTime.ALWAYS)
     @Column(name = "updated_datetime")
     private Date updatedDatetime;
 

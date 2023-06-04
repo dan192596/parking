@@ -2,6 +2,7 @@ package com.project.parking.dao;
 
 import com.project.parking.dao.behavior.IUserDao;
 import com.project.parking.data.defaults.StatusDefault;
+import com.project.parking.data.defaults.StatusValue;
 import com.project.parking.data.dto.PageDTO;
 import com.project.parking.data.dto.UserDTO;
 import com.project.parking.data.entity.User;
@@ -68,9 +69,6 @@ public class UserDao implements IUserDao {
             user.setDocument(userDTO.getDocument());
             user.setBirthday(userDTO.getBirthday());
             user.setPhone(userDTO.getPhone());
-            user.setEmail(userDTO.getEmail());
-            long time = new Date().getTime();
-            user.setUpdatedDatetime(new Date(time));
             userRepository.save(user);
         });
         return userOptional.map(UserDTO::new);
@@ -80,18 +78,20 @@ public class UserDao implements IUserDao {
     public Optional<UserDTO> delete(Long id) {
         Optional<User> userOptional = userRepository.findById(id);
         userOptional.ifPresent(user -> {
-            //Cambiar estatus a deshabilitado
+            user.setStatus(statusDefault.getDisabled());
+            userRepository.save(user);
         } );
         return userOptional.map(UserDTO::new);
     }
 
     @Override
     public Optional<UserDTO> insert(UserDTO userDTO) {
-        boolean userExist = userRepository.existsByEmail(userDTO.getEmail());
-        if(userExist){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuario existente");
-        }
-        User user = new User();
+        Optional<User> temporalUser = userRepository.findByEmail(userDTO.getEmail());
+        temporalUser.ifPresent(user -> {
+            if(user.getStatus().getId()==StatusValue.ENABLED.getValue())
+                throw  new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuario ya registrado y habilitado");
+        });
+        User user = temporalUser.isPresent()?temporalUser.get():new User();
         user.setName(userDTO.getName());
         user.setLastname(userDTO.getLastname());
         user.setDocument(userDTO.getDocument());
@@ -100,6 +100,7 @@ public class UserDao implements IUserDao {
         user.setEmail(userDTO.getEmail());
         user.setStatus(statusDefault.getEnabled());
         user.setIdentifier(userDTO.getUuid());
+        user.setDocument(userDTO.getDocument());
         return Optional.of(new UserDTO(userRepository.save(user)));
     }
 

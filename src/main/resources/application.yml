@@ -14,6 +14,22 @@ spring:
       request-timeout: -1
 
   datasource:
-    url: jdbc:mysql://localhost:33060/core?sslmode=disable
+    url: jdbc:mysql://localhost:33060/core
     username: root
     password: test123
+
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: bydtesis@gmail.com
+    password: okvceiaguysksdbe
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
+parking:
+    origin-email: "bydtesis@gmail.com"
+    reply-email: "bydtesis@gmail.com"

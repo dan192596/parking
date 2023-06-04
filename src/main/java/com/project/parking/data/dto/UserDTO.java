@@ -2,10 +2,12 @@ package com.project.parking.data.dto;
 
 import com.project.parking.data.entity.User;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
 public class UserDTO {
 
     public UserDTO(User user){

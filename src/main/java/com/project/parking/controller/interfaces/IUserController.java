@@ -18,7 +18,7 @@ public interface IUserController extends IMantainanceController<UserDTO,Long> {
     *
     *
     * */
-    @GetMapping(path = "/{uuid}",
+    @GetMapping(path = "login/{uuid}",
             produces = "application/json")
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody

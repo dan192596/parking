@@ -10,4 +10,6 @@ public interface UserRepository extends PagingAndSortingRepository<User, Long> {
     boolean existsByEmail(String email);
 
     Optional<User> findByIdentifier(String identifier);
+
+    Optional<User> findByEmail(String email);
 }
