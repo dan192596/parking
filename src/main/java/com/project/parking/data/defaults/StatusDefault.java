@@ -13,13 +13,23 @@ public class StatusDefault {
     @NonNull
     private final StatusRepository statusRepository;
 
-        public Status getEnabled(){
+    public Status getEnabled(){
         return statusRepository.findById(StatusValue.ENABLED.getValue())
                 .orElseGet(Status::new);
     }
 
     public Status getDisabled(){
         return statusRepository.findById(StatusValue.DISABLED.getValue())
+                .orElseGet(Status::new);
+    }
+
+    public Status getPending(){
+        return statusRepository.findById(StatusValue.PENDING.getValue())
+                .orElseGet(Status::new);
+    }
+
+    public Status getConsumed(){
+        return statusRepository.findById(StatusValue.CONSUMED.getValue())
                 .orElseGet(Status::new);
     }
 

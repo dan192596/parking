@@ -98,7 +98,7 @@ public class UserDao implements IUserDao {
         user.setBirthday(userDTO.getBirthday());
         user.setPhone(userDTO.getPhone());
         user.setEmail(userDTO.getEmail());
-        user.setStatus(statusDefault.getEnabled());
+        user.setStatus(statusDefault.getPending());
         user.setIdentifier(userDTO.getUuid());
         user.setDocument(userDTO.getDocument());
         return Optional.of(new UserDTO(userRepository.save(user)));
@@ -108,5 +108,10 @@ public class UserDao implements IUserDao {
     public Optional<UserDTO> select(String uuid) {
         Optional<User> user = userRepository.findByIdentifier(uuid);
         return user.map(UserDTO::new);
+    }
+
+    @Override
+    public Optional<User> selectUser(Long id) {
+        return userRepository.findById(id);
     }
 }

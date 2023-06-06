@@ -3,7 +3,11 @@ package com.project.parking.data.defaults;
 public enum StatusValue {
 
     ENABLED(1L),
-    DISABLED(2L)
+    DISABLED(2L),
+
+    PENDING(3L),
+
+    CONSUMED(4L)
 
     ;
 
