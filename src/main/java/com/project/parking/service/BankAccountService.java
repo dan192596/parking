@@ -3,6 +3,7 @@ package com.project.parking.service;
 import com.project.parking.dao.behavior.IBankAccountDao;
 import com.project.parking.data.dto.BankAccountDTO;
 import com.project.parking.data.dto.PageDTO;
+import com.project.parking.data.dto.VehicleDTO;
 import com.project.parking.service.behavior.IBankAccountService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,10 @@ public class BankAccountService implements IBankAccountService {
     @Override
     public Optional<BankAccountDTO> insertObject(BankAccountDTO object) {
         return accountDao.insert(object);
+    }
+
+    @Override
+    public PageDTO<List<BankAccountDTO>> getAllAccountsByUserList(Map<String, Object> queryParams) {
+        return accountDao.getAllAccountsByUserList(queryParams);
     }
 }

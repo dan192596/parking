@@ -80,4 +80,15 @@ public class VehicleController implements IVehicleController {
         }
         return result;
     }
+
+    @Override
+    public DeferredResult<String> getAllVehicleByUserList(Map<String, Object> queryParams) {
+        DeferredResult<String> result = new DeferredResult<>();
+        try{
+            result.setResult(gson.toJson(vehicleService.getAllVehicleByUserList(queryParams)));
+        }catch (Exception e){
+            result.setErrorResult(e.getMessage());
+        }
+        return result;
+    }
 }

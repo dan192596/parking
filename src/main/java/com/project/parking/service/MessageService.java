@@ -3,6 +3,7 @@ package com.project.parking.service;
 import com.project.parking.dao.behavior.IMessageDao;
 import com.project.parking.data.dto.MessageDTO;
 import com.project.parking.data.dto.PageDTO;
+import com.project.parking.data.dto.VehicleDTO;
 import com.project.parking.service.behavior.IMessageService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,10 @@ public class MessageService implements IMessageService {
     @Override
     public Optional<MessageDTO> insertObject(MessageDTO object) {
         return messageDao.insert(object);
+    }
+
+    @Override
+    public PageDTO<List<MessageDTO>> getAllMessagesByChatList(Map<String, Object> queryParams) {
+        return messageDao.getAllMessagesByChatList(queryParams);
     }
 }

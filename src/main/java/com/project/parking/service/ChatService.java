@@ -3,6 +3,7 @@ package com.project.parking.service;
 import com.project.parking.dao.behavior.IChatDao;
 import com.project.parking.data.dto.ChatDTO;
 import com.project.parking.data.dto.PageDTO;
+import com.project.parking.data.dto.VehicleDTO;
 import com.project.parking.service.behavior.IChatService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -42,5 +43,10 @@ public class ChatService implements IChatService {
     @Override
     public Optional<ChatDTO> insertObject(ChatDTO object) {
         return chatDao.insert(object);
+    }
+
+    @Override
+    public PageDTO<List<ChatDTO>> getAllChatsByUserList(Map<String, Object> queryParams) {
+        return chatDao.getAllChatsByUserList(queryParams);
     }
 }

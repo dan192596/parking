@@ -66,11 +66,6 @@ public class VehicleDao implements IVehicleDao {
     @Override
     public Optional<VehicleDTO> update(Long id, VehicleDTO object) {
         Optional<Vehicle> vehicleOptional = vehicleRepository.findById(id);
-//        Optional<User> userOptional = userRepository.findById(object.getUser());
-//        //Validacion usuario existente
-//        if(!userOptional.isPresent()){
-//            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "No se encontre el usuario");
-//        }
         vehicleOptional.ifPresent(vehicle -> {
             vehicle.setPlate(object.getPlate());
             vehicle.setColor(object.getColor());
@@ -107,5 +102,25 @@ public class VehicleDao implements IVehicleDao {
         vehicle.setUser(userOptional.get());
         vehicle.setStatus(statusDefault.getEnabled());
         return Optional.of(new VehicleDTO(vehicleRepository.save(vehicle))) ;
+    }
+
+    @Override
+    public PageDTO<List<VehicleDTO>> getAllVehicleByUserList(Map<String, Object> queryParams) {
+        System.out.println(queryParams.containsKey("user"));
+        System.out.println((String) queryParams.get("user"));
+        DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
+        Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
+        System.out.println(params.getUser());
+        Page<Vehicle> vehicles = vehicleRepository.findAllByUserId(params.getUser(), pageable);
+
+        return new PageDTO<>(
+                vehicles.getContent()
+                        .stream()
+                        .map(VehicleDTO::new)
+                        .collect(Collectors.toList()),
+                vehicles.getTotalElements(),
+                params.getIndex(),
+                vehicles.getContent().size()
+        );
     }
 }

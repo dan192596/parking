@@ -84,4 +84,21 @@ public class MessageDao implements IMessageDao {
         message.setUserMessage(true);
         return Optional.of(new MessageDTO(messageRepository.save(message)));
     }
+
+    @Override
+    public PageDTO<List<MessageDTO>> getAllMessagesByChatList(Map<String, Object> queryParams) {
+        DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
+        Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
+        Page<Message> messages = messageRepository.findAllByChatId(params.getChat(), pageable);
+
+        return new PageDTO<>(
+                messages.getContent()
+                        .stream()
+                        .map(MessageDTO::new)
+                        .collect(Collectors.toList()),
+                messages.getTotalElements(),
+                params.getIndex(),
+                messages.getContent().size()
+        );
+    }
 }

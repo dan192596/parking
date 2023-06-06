@@ -79,4 +79,15 @@ public class BankAccountController implements IBankAccountController {
         }
         return result;
     }
+
+    @Override
+    public DeferredResult<String> getAllAccountsByUserList(Map<String, Object> queryParams) {
+        DeferredResult<String> result = new DeferredResult<>();
+        try{
+            result.setResult(gson.toJson(accountService.getAllAccountsByUserList(queryParams)));
+        }catch (Exception e){
+            result.setErrorResult(e.getMessage());
+        }
+        return result;
+    }
 }

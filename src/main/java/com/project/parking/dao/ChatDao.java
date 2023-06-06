@@ -91,4 +91,21 @@ public class ChatDao implements IChatDao {
         chat.setUser(userOptional.get());
         return Optional.of(new ChatDTO(chatRepository.save(chat)));
     }
+
+    @Override
+    public PageDTO<List<ChatDTO>> getAllChatsByUserList(Map<String, Object> queryParams) {
+        DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
+        Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
+        Page<Chat> chats = chatRepository.findAllByUserId(params.getUser(), pageable);
+
+        return new PageDTO<>(
+                chats.getContent()
+                        .stream()
+                        .map(ChatDTO::new)
+                        .collect(Collectors.toList()),
+                chats.getTotalElements(),
+                params.getIndex(),
+                chats.getContent().size()
+        );
+    }
 }

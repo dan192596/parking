@@ -43,4 +43,9 @@ public class VehicleService implements IVehicleService {
     public Optional<VehicleDTO> insertObject(VehicleDTO object) {
         return vehicleDao.insert(object);
     }
+
+    @Override
+    public PageDTO<List<VehicleDTO>> getAllVehicleByUserList(Map<String, Object> queryParams) {
+        return vehicleDao.getAllVehicleByUserList(queryParams);
+    }
 }

@@ -101,4 +101,21 @@ public class BankAccountDao implements IBankAccountDao {
         bankAccount.setStatus(statusDefault.getEnabled());
         return Optional.of(new BankAccountDTO(accountRepository.save(bankAccount)));
     }
+
+    @Override
+    public PageDTO<List<BankAccountDTO>> getAllAccountsByUserList(Map<String, Object> queryParams) {
+        DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
+        Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
+        Page<BankAccount> bankAccounts = accountRepository.findAllByUserId(params.getUser(), pageable);
+
+        return new PageDTO<>(
+                bankAccounts.getContent()
+                        .stream()
+                        .map(BankAccountDTO::new)
+                        .collect(Collectors.toList()),
+                bankAccounts.getTotalElements(),
+                params.getIndex(),
+                bankAccounts.getContent().size()
+        );
+    }
 }

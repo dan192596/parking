@@ -80,4 +80,15 @@ public class ChatController implements IChatController {
         }
         return result;
     }
+
+    @Override
+    public DeferredResult<String> getAllChatsByUserList(Map<String, Object> queryParams) {
+        DeferredResult<String> result = new DeferredResult<>();
+        try{
+            result.setResult(gson.toJson(chatService.getAllChatsByUserList(queryParams)));
+        }catch (Exception e){
+            result.setErrorResult(e.getMessage());
+        }
+        return result;
+    }
 }

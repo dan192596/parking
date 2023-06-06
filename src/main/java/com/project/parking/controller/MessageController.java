@@ -81,4 +81,15 @@ public class MessageController implements IMessageController {
         }
         return result;
     }
+
+    @Override
+    public DeferredResult<String> getAllMessagesByChatList(Map<String, Object> queryParams) {
+        DeferredResult<String> result = new DeferredResult<>();
+        try{
+            result.setResult(gson.toJson(messageService.getAllMessagesByChatList(queryParams)));
+        }catch (Exception e){
+            result.setErrorResult(e.getMessage());
+        }
+        return result;
+    }
 }
