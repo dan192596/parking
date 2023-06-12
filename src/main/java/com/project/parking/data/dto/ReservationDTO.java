@@ -1,12 +1,15 @@
 package com.project.parking.data.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.project.parking.data.entity.Reservation;
 import com.project.parking.data.entity.Vehicle;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
 public class ReservationDTO {
 
     public ReservationDTO(Reservation reservation){
@@ -19,6 +22,8 @@ public class ReservationDTO {
     }
 
     private Long id;
+
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date start, end;
     private ParkingDTO parking;
     private VehicleDTO vehicle;
