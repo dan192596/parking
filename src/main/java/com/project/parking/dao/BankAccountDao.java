@@ -83,7 +83,7 @@ public class BankAccountDao implements IBankAccountDao {
         }
 
         BankAccount bankAccount = bankAccountOptional.get();
-        bankAccount.setStatus(statusDefault.getEnabled());
+        bankAccount.setStatus(statusDefault.getDisabled());
         return Optional.of(new BankAccountDTO(accountRepository.save(bankAccount)));
     }
 
@@ -99,7 +99,17 @@ public class BankAccountDao implements IBankAccountDao {
         bankAccount.setPrincipal(object.getPrincipal());
         bankAccount.setUser(userOptional.get());
         bankAccount.setStatus(statusDefault.getEnabled());
-        return Optional.of(new BankAccountDTO(accountRepository.save(bankAccount)));
+        accountRepository.save(bankAccount);
+        if(bankAccount.getPrincipal()){//Se guardo como cuenta principal, se cambian todas sus cuentas a no principales
+            List<BankAccount> bankAccountList = accountRepository.findAllByUserId(userOptional.get().getId());
+            bankAccountList.forEach(bankAccount1 -> {
+                if(bankAccount1.getPrincipal()&&bankAccount1.getId()!=bankAccount.getId()){
+                    bankAccount1.setPrincipal(false);
+                    accountRepository.save(bankAccount1);
+                }
+            });
+        }
+        return Optional.of(new BankAccountDTO(bankAccount));
     }
 
     @Override

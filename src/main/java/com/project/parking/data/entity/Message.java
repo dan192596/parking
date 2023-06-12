@@ -1,6 +1,8 @@
 package com.project.parking.data.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -20,7 +22,7 @@ public class Message {
     @Column(name = "message")
     private String message;
 
-    @NotNull
+    @Generated(GenerationTime.INSERT)
     @Column(name = "sent_datetime")
     private Date sentDatetime;
 

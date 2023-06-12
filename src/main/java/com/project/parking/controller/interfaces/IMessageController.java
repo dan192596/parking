@@ -12,7 +12,7 @@ import org.springframework.web.context.request.async.DeferredResult;
 import java.util.Map;
 
 public interface IMessageController extends IMantainanceController<MessageDTO, Long>{
-    @GetMapping(path = "/user",
+    @GetMapping(path = "/chat",
             produces = "application/json")
     @ResponseStatus(code = HttpStatus.OK)
     @ResponseBody

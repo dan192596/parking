@@ -1,6 +1,8 @@
 package com.project.parking.data.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -16,7 +18,7 @@ public class Chat {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull
+    @Generated(GenerationTime.INSERT)
     @Column(name = "created_datetime")
     private Date createdDatetime;
 

@@ -1,6 +1,8 @@
 package com.project.parking.data.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Generated;
+import org.hibernate.annotations.GenerationTime;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -28,7 +30,7 @@ public class BankAccount {
     @Column(name = "principal")
     private Boolean principal;
 
-    @NotNull
+    @Generated(GenerationTime.INSERT)
     @Column(name = "affiliation_datetime")
     private Date affiliationDatetime;
 

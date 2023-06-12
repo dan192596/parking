@@ -76,12 +76,12 @@ public class ChatDao implements IChatDao {
 
     @Override
     public Optional<ChatDTO> insert(ChatDTO object) {
-        Optional<User> userOptional = userRepository.findById(object.getUser().getId());
+        Optional<User> userOptional = userRepository.findById(object.getUser());
         if(!userOptional.isPresent()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuario inexistente");
         }
 
-        Optional<Parking> parkingOptional = parkingRepository.findById(object.getParking().getId());
+        Optional<Parking> parkingOptional = parkingRepository.findById(object.getParkingId());
         if(!parkingOptional.isPresent()){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parqueo inexistente");
         }

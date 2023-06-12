@@ -2,10 +2,12 @@ package com.project.parking.data.dto;
 
 import com.project.parking.data.entity.BankAccount;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.Date;
 
 @Data
+@NoArgsConstructor
 public class BankAccountDTO {
 
     public BankAccountDTO(BankAccount bankAccount){
@@ -15,6 +17,7 @@ public class BankAccountDTO {
         this.setAffiliation(bankAccount.getAffiliationDatetime());
         this.setStatus(new StatusDTO(bankAccount.getStatus()));
         this.setUser(bankAccount.getUser().getId());
+        this.setType(bankAccount.getType());
     }
 
     private Long id;
