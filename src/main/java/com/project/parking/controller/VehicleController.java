@@ -32,7 +32,7 @@ public class VehicleController implements IVehicleController {
         try{
             result.setResult(gson.toJson(vehicleService.getAllObject(queryParams)));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -43,7 +43,7 @@ public class VehicleController implements IVehicleController {
         try{
             result.setResult(vehicleService.getObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -54,7 +54,7 @@ public class VehicleController implements IVehicleController {
         try{
             result.setResult(vehicleService.updateObjectById(id, object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -65,7 +65,7 @@ public class VehicleController implements IVehicleController {
         try{
             result.setResult(vehicleService.deleteObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -76,7 +76,7 @@ public class VehicleController implements IVehicleController {
         try{
             result.setResult(vehicleService.insertObject(object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -87,7 +87,7 @@ public class VehicleController implements IVehicleController {
         try{
             result.setResult(gson.toJson(vehicleService.getAllVehicleByUserList(queryParams)));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }

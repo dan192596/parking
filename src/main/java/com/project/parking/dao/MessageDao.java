@@ -10,8 +10,11 @@ import com.project.parking.data.entity.Message;
 import com.project.parking.data.entity.Parking;
 import com.project.parking.data.entity.User;
 import com.project.parking.data.model.DefaultsParamsModel;
+import com.project.parking.data.model.NewChatModel;
 import com.project.parking.data.repository.ChatRepository;
 import com.project.parking.data.repository.MessageRepository;
+import com.project.parking.data.repository.ParkingRepository;
+import com.project.parking.data.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,6 +40,11 @@ public class MessageDao implements IMessageDao {
     @NonNull
     private final ChatRepository chatRepository;
 
+    @NonNull
+    private final ParkingRepository parkingRepository;
+
+    @NonNull
+    private final UserRepository userRepository;
 
     @Override
     public Optional<MessageDTO> select(Long id) {
@@ -100,5 +108,35 @@ public class MessageDao implements IMessageDao {
                 params.getIndex(),
                 messages.getContent().size()
         );
+    }
+
+    @Override
+    public Optional<MessageDTO> insertChat(NewChatModel object) {
+        Optional<Parking> parkingOptional = parkingRepository.findById(object.getParking());
+        if(!parkingOptional.isPresent()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parqueo inexistente");
+        }
+
+        Optional<User> userOptional = userRepository.findById(object.getUser());
+        if(!userOptional.isPresent()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Usuario inexistente");
+        }
+
+        Optional<Chat> chatOptional = chatRepository.findByParkingAndUser(parkingOptional.get(), userOptional.get());
+        Chat chat;
+        if(chatOptional.isPresent()){
+            chat = chatOptional.get();
+        }else{
+            chat = new Chat();
+            chat.setParking(parkingOptional.get());
+            chat.setUser(userOptional.get());
+            chatRepository.save(chat);
+        }
+
+        Message message = new Message();
+        message.setMessage(object.getMessage());
+        message.setChat(chat);
+        message.setUserMessage(true);
+        return Optional.of(new MessageDTO(messageRepository.save(message)));
     }
 }

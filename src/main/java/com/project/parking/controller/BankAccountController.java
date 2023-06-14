@@ -31,7 +31,7 @@ public class BankAccountController implements IBankAccountController {
         try{
             result.setResult(gson.toJson(accountService.getAllObject(queryParams)));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -42,7 +42,7 @@ public class BankAccountController implements IBankAccountController {
         try{
             result.setResult(accountService.getObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -53,7 +53,7 @@ public class BankAccountController implements IBankAccountController {
         try{
             result.setResult(accountService.updateObjectById(id, object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -64,7 +64,7 @@ public class BankAccountController implements IBankAccountController {
         try{
             result.setResult(accountService.deleteObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -75,7 +75,7 @@ public class BankAccountController implements IBankAccountController {
         try{
             result.setResult(accountService.insertObject(object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -86,7 +86,7 @@ public class BankAccountController implements IBankAccountController {
         try{
             result.setResult(gson.toJson(accountService.getAllAccountsByUserList(queryParams)));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }

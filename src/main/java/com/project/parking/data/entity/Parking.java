@@ -34,4 +34,7 @@ public class Parking {
     @ManyToOne
     @JoinColumn(name = "status_id")
     private Status status;
+
+    @Column(name = "name")
+    private String name;
 }

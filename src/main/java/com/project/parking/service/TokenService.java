@@ -70,6 +70,8 @@ public class TokenService implements ITokenService {
             userRepository.save(validUser);
             token.setStatus(statusDefault.getConsumed());
             return Optional.of(new TokenDTO(tokenDao.save(token)));
+        }else{
+
         }
         return Optional.empty();
     }

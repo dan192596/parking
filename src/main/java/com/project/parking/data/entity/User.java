@@ -34,8 +34,7 @@ public class User {
     @NotNull
     @Column(name = "birthday")
     private Date birthday;
-
-    @NotNull
+    
     @Column(name = "phone")
     private String phone;
 

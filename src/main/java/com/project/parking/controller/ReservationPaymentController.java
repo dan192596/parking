@@ -31,7 +31,7 @@ public class ReservationPaymentController implements IReservationPaymentControll
         try{
             result.setResult(gson.toJson(reservationPaymentService.getAllObject(queryParams)));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -42,7 +42,7 @@ public class ReservationPaymentController implements IReservationPaymentControll
         try{
             result.setResult(reservationPaymentService.getObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -53,7 +53,7 @@ public class ReservationPaymentController implements IReservationPaymentControll
         try{
             result.setResult(reservationPaymentService.updateObjectById(id, object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -64,7 +64,7 @@ public class ReservationPaymentController implements IReservationPaymentControll
         try{
             result.setResult(reservationPaymentService.deleteObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -75,7 +75,7 @@ public class ReservationPaymentController implements IReservationPaymentControll
         try{
             result.setResult(reservationPaymentService.insertObject(object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }

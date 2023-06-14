@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import com.project.parking.controller.interfaces.IMessageController;
 import com.project.parking.data.dto.MessageDTO;
 import com.project.parking.data.dto.UserDTO;
+import com.project.parking.data.model.NewChatModel;
 import com.project.parking.service.behavior.IMessageService;
 import com.project.parking.service.behavior.IUserService;
 import lombok.NonNull;
@@ -33,7 +34,7 @@ public class MessageController implements IMessageController {
         try{
             result.setResult(gson.toJson(messageService.getAllObject(queryParams)));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -44,7 +45,7 @@ public class MessageController implements IMessageController {
         try{
             result.setResult(messageService.getObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -55,7 +56,7 @@ public class MessageController implements IMessageController {
         try{
             result.setResult(messageService.updateObjectById(id, object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -66,7 +67,7 @@ public class MessageController implements IMessageController {
         try{
             result.setResult(messageService.deleteObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -77,7 +78,7 @@ public class MessageController implements IMessageController {
         try{
             result.setResult(messageService.insertObject(object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -88,7 +89,18 @@ public class MessageController implements IMessageController {
         try{
             result.setResult(gson.toJson(messageService.getAllMessagesByChatList(queryParams)));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
+        }
+        return result;
+    }
+
+    @Override
+    public DeferredResult<Optional<MessageDTO>> insertObject(NewChatModel object) {
+        DeferredResult<Optional<MessageDTO>> result = new DeferredResult<>();
+        try{
+            result.setResult(messageService.insertChat(object));
+        }catch (Exception e){
+            result.setErrorResult(e);
         }
         return result;
     }

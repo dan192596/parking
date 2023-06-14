@@ -32,7 +32,7 @@ public class ChatController implements IChatController {
         try{
             result.setResult(gson.toJson(chatService.getAllObject(queryParams)));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -43,7 +43,7 @@ public class ChatController implements IChatController {
         try{
             result.setResult(chatService.getObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -54,7 +54,7 @@ public class ChatController implements IChatController {
         try{
             result.setResult(chatService.updateObjectById(id, object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -65,7 +65,7 @@ public class ChatController implements IChatController {
         try{
             result.setResult(chatService.deleteObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -76,7 +76,7 @@ public class ChatController implements IChatController {
         try{
             result.setResult(chatService.insertObject(object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -87,7 +87,7 @@ public class ChatController implements IChatController {
         try{
             result.setResult(gson.toJson(chatService.getAllChatsByUserList(queryParams)));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }

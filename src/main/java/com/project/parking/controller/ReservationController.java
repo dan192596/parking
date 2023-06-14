@@ -32,7 +32,7 @@ public class ReservationController implements IReservationController {
         try{
             result.setResult(gson.toJson(reservationService.getAllObject(queryParams)));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -43,7 +43,7 @@ public class ReservationController implements IReservationController {
         try{
             result.setResult(reservationService.getObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -54,7 +54,7 @@ public class ReservationController implements IReservationController {
         try{
             result.setResult(reservationService.updateObjectById(id, object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -65,7 +65,7 @@ public class ReservationController implements IReservationController {
         try{
             result.setResult(reservationService.deleteObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -76,7 +76,7 @@ public class ReservationController implements IReservationController {
         try{
             result.setResult(reservationService.insertObject(object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }

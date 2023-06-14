@@ -30,7 +30,7 @@ public class TokenController implements ITokenController {
         try{
             result.setResult(tokenService.createToken(tokenModel));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -38,10 +38,11 @@ public class TokenController implements ITokenController {
     @Override
     public DeferredResult<Optional<TokenDTO>> validateToken(BasicTokenModel tokenModel) {
         DeferredResult<Optional<TokenDTO>> result = new DeferredResult<>();
+        //Prueba para ver response
         try{
             result.setResult(tokenService.validateToken(tokenModel));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }

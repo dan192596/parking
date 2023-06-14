@@ -68,6 +68,7 @@ public class ParkingDao implements IParkingDao {
             parking.setLatitude(object.getLatitude());
             parking.setLongitude(object.getLongitude());
             parking.setPrice_hour(object.getPriceHour());
+            parking.setName(object.getName());
             parkingRepository.save(parking);
         });
         return reservationOptional.map(ParkingDTO::new);
@@ -92,6 +93,7 @@ public class ParkingDao implements IParkingDao {
         parking.setLongitude(object.getLongitude());
         parking.setPrice_hour(object.getPriceHour());
         parking.setStatus(statusDefault.getEnabled());
+        parking.setName(object.getName());
         return Optional.of(new ParkingDTO(parkingRepository.save(parking)));
     }
 }

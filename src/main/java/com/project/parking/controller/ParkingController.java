@@ -32,7 +32,7 @@ public class ParkingController implements IParkingController {
         try{
             result.setResult(gson.toJson(parkingService.getAllObject(queryParams)));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -43,7 +43,7 @@ public class ParkingController implements IParkingController {
         try{
             result.setResult(parkingService.getObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -54,7 +54,7 @@ public class ParkingController implements IParkingController {
         try{
             result.setResult(parkingService.updateObjectById(id, object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -65,7 +65,7 @@ public class ParkingController implements IParkingController {
         try{
             result.setResult(parkingService.deleteObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -76,7 +76,7 @@ public class ParkingController implements IParkingController {
         try{
             result.setResult(parkingService.insertObject(object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }

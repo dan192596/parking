@@ -30,7 +30,7 @@ public class UserController implements IUserController {
         try{
             result.setResult(gson.toJson(userService.getAllObject(queryParams)));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -41,7 +41,7 @@ public class UserController implements IUserController {
         try{
             result.setResult(userService.getObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -52,7 +52,7 @@ public class UserController implements IUserController {
         try{
             result.setResult(userService.updateObjectById(id, object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -63,7 +63,7 @@ public class UserController implements IUserController {
         try{
             result.setResult(userService.deleteObjectById(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -74,7 +74,7 @@ public class UserController implements IUserController {
         try{
             result.setResult(userService.insertObject(object));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }
@@ -85,7 +85,7 @@ public class UserController implements IUserController {
         try{
             result.setResult(userService.select(id));
         }catch (Exception e){
-            result.setErrorResult(e.getMessage());
+            result.setErrorResult(e);
         }
         return result;
     }

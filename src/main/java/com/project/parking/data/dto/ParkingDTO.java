@@ -14,7 +14,7 @@ public class ParkingDTO {
         this.setLongitude(parking.getLongitude());
         this.setPriceHour(parking.getPrice_hour());
         this.setStatus(new StatusDTO(parking.getStatus()));
-        this.setPriceHour(parking.getPrice_hour());
+        this.setName(parking.getName());
     }
 
     private Long id;
@@ -22,4 +22,5 @@ public class ParkingDTO {
     private Float latitude, longitude;
     private Float priceHour;
     private StatusDTO status;
+    private String name;
 }
