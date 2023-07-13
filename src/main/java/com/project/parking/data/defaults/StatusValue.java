@@ -7,7 +7,9 @@ public enum StatusValue {
 
     PENDING(3L),
 
-    CONSUMED(4L)
+    CONSUMED(4L),
+
+    PAYED(5L),
 
     ;
 

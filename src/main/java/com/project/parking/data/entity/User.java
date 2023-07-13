@@ -31,7 +31,6 @@ public class User {
     @Column(name = "document")
     private String document;
 
-    @NotNull
     @Column(name = "birthday")
     private Date birthday;
     

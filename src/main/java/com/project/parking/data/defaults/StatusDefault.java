@@ -33,6 +33,11 @@ public class StatusDefault {
                 .orElseGet(Status::new);
     }
 
+    public Status getPayed(){
+        return statusRepository.findById(StatusValue.PAYED.getValue())
+                .orElseGet(Status::new);
+    }
+
     public Status getStatus(Long id){
         return statusRepository.findById(id)
                 .orElseGet(Status::new);

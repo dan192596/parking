@@ -81,7 +81,7 @@ public class ReservationDao implements IReservationDao {
     public Optional<ReservationDTO> delete(Long id) {
         Optional<Reservation> reservationOptional = reservationRepository.findById(id);
         if(!reservationOptional.isPresent()){
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservacion inexistente");
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Reservacion inexistente");
         }
         Reservation reservation = reservationOptional.get();
         reservation.setStatus(statusDefault.getDisabled());
@@ -105,7 +105,7 @@ public class ReservationDao implements IReservationDao {
         reservation.setEndDatetime(object.getEnd());
         reservation.setParking(parkingOptional.get());
         reservation.setVehicle(vehicleOptional.get());
-        reservation.setStatus(statusDefault.getEnabled());
+        reservation.setStatus(statusDefault.getPending());
         return Optional.of(new ReservationDTO(reservationRepository.save(reservation)));
     }
 }

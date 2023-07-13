@@ -5,9 +5,11 @@ import com.project.parking.data.defaults.StatusDefault;
 import com.project.parking.data.dto.PageDTO;
 import com.project.parking.data.dto.UserDTO;
 import com.project.parking.data.dto.VehicleDTO;
+import com.project.parking.data.entity.Reservation;
 import com.project.parking.data.entity.User;
 import com.project.parking.data.entity.Vehicle;
 import com.project.parking.data.model.DefaultsParamsModel;
+import com.project.parking.data.repository.ReservationRepository;
 import com.project.parking.data.repository.UserRepository;
 import com.project.parking.data.repository.VehicleRepository;
 import lombok.NonNull;
@@ -33,6 +35,9 @@ public class VehicleDao implements IVehicleDao {
 
     @NonNull
     private final VehicleRepository vehicleRepository;
+
+    @NonNull
+    private final ReservationRepository reservationRepository;
 
     @NonNull
     private final UserRepository userRepository;
@@ -81,7 +86,13 @@ public class VehicleDao implements IVehicleDao {
     public Optional<VehicleDTO> delete(Long id) {
         Optional<Vehicle> vehicleOptional = vehicleRepository.findById(id);
         vehicleOptional.ifPresent(vehicle -> {
-            //Cambiar stattus a deshabilitado
+            List<Reservation> reservationList = reservationRepository.findAllByDatetime(new Date());
+            if(reservationList.isEmpty()){
+                vehicle.setStatus(statusDefault.getDisabled());
+                vehicleRepository.save(vehicle);
+            }else{
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservación existente, no se puede eliminar");
+            }
         });
         return Optional.empty();
     }
@@ -91,7 +102,7 @@ public class VehicleDao implements IVehicleDao {
         Optional<User> userOptional = userRepository.findById(object.getUser());
 
         if(!userOptional.isPresent()){
-            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "Usuario no encontrado");
+            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Usuario no encontrado");
         }
         Vehicle vehicle = new Vehicle();
         vehicle.setPlate(object.getPlate());
@@ -106,13 +117,9 @@ public class VehicleDao implements IVehicleDao {
 
     @Override
     public PageDTO<List<VehicleDTO>> getAllVehicleByUserList(Map<String, Object> queryParams) {
-        System.out.println(queryParams.containsKey("user"));
-        System.out.println((String) queryParams.get("user"));
         DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
         Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
-        System.out.println(params.getUser());
         Page<Vehicle> vehicles = vehicleRepository.findAllByUserId(params.getUser(), pageable);
-
         return new PageDTO<>(
                 vehicles.getContent()
                         .stream()

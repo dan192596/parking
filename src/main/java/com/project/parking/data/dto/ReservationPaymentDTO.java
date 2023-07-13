@@ -13,12 +13,12 @@ public class ReservationPaymentDTO {
         this.setTotal(reservationPayment.getTotal());
         this.setStatus(new StatusDTO(reservationPayment.getStatus()));
         this.setReservation(reservationPayment.getReservation().getId());
-        this.setBankAccount(new BankAccountDTO(reservationPayment.getBankAccount()));
+        this.setClient(reservationPayment.getBankAccount().getUser().getId());
     }
 
     private Long id;
     private Float total;
     private StatusDTO status;
     private Long reservation;
-    private BankAccountDTO bankAccount;
+    private Long client;
 }

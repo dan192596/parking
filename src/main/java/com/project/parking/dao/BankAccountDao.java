@@ -6,9 +6,11 @@ import com.project.parking.data.dto.BankAccountDTO;
 import com.project.parking.data.dto.PageDTO;
 import com.project.parking.data.dto.UserDTO;
 import com.project.parking.data.entity.BankAccount;
+import com.project.parking.data.entity.Reservation;
 import com.project.parking.data.entity.User;
 import com.project.parking.data.model.DefaultsParamsModel;
 import com.project.parking.data.repository.BankAccountRepository;
+import com.project.parking.data.repository.ReservationRepository;
 import com.project.parking.data.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +37,9 @@ public class BankAccountDao implements IBankAccountDao {
 
     @NonNull
     private final UserRepository userRepository;
+
+    @NonNull
+    private final ReservationRepository reservationRepository;
 
     @NonNull
     private final StatusDefault statusDefault;
@@ -83,7 +88,13 @@ public class BankAccountDao implements IBankAccountDao {
         }
 
         BankAccount bankAccount = bankAccountOptional.get();
-        bankAccount.setStatus(statusDefault.getDisabled());
+        //validating reservations
+        List<Reservation> reservationList = reservationRepository.findAllByDatetime(new Date());
+        if(reservationList.isEmpty()){
+            bankAccount.setStatus(statusDefault.getDisabled());
+        }else{
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservación existente, no se puede eliminar");
+        }
         return Optional.of(new BankAccountDTO(accountRepository.save(bankAccount)));
     }
 
