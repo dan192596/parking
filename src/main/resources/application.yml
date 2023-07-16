@@ -12,6 +12,8 @@ spring:
   mvc:
     async:
       request-timeout: -1
+  jackson:
+    time-zone: America/Guatemala
 
   datasource:
     url: jdbc:mysql://localhost:33060/core

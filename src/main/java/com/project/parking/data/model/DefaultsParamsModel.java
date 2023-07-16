@@ -31,6 +31,8 @@ public class DefaultsParamsModel {
 
     private Long chat;
 
+    private Long status;
+
     public DefaultsParamsModel(Map<String, Object> queryParams){
         this.setIndex(queryParams.containsKey("index") ? Integer.parseInt((String)queryParams.get("index")) : 0);
         this.setItems(queryParams.containsKey("items") ? Integer.parseInt((String) queryParams.get("items")) : 10);
@@ -41,6 +43,7 @@ public class DefaultsParamsModel {
         this.setYear(queryParams.containsKey("year") ? Integer.valueOf((String) queryParams.get("year")) : null);
         this.setUser(queryParams.containsKey("user") ? Long.valueOf((String) queryParams.get("user")) : null);
         this.setChat(queryParams.containsKey("chat") ? Long.valueOf((String) queryParams.get("chat")) : null);
+        this.setStatus(queryParams.containsKey("status") ? Long.valueOf((String) queryParams.get("status")) : null);
         try{
             this.setStartDate(queryParams.containsKey("startDate") ? new SimpleDateFormat("MM/dd/yyyy").parse((String) queryParams.get("startDate")) : null);
             this.setEndDate(queryParams.containsKey("endDate") ? new SimpleDateFormat("MM/dd/yyyy").parse((String) queryParams.get("endDate")) : null);

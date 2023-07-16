@@ -2,10 +2,7 @@ package com.project.parking.dao;
 
 import com.project.parking.dao.behavior.IReservationDao;
 import com.project.parking.data.defaults.StatusDefault;
-import com.project.parking.data.dto.MessageDTO;
-import com.project.parking.data.dto.PageDTO;
-import com.project.parking.data.dto.ReservationDTO;
-import com.project.parking.data.dto.UserDTO;
+import com.project.parking.data.dto.*;
 import com.project.parking.data.entity.*;
 import com.project.parking.data.model.DefaultsParamsModel;
 import com.project.parking.data.repository.ParkingRepository;
@@ -21,10 +18,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -107,5 +101,27 @@ public class ReservationDao implements IReservationDao {
         reservation.setVehicle(vehicleOptional.get());
         reservation.setStatus(statusDefault.getPending());
         return Optional.of(new ReservationDTO(reservationRepository.save(reservation)));
+    }
+
+    @Override
+    public PageDTO<List<ReservationDTO>> getAllReservationsByUserList(Map<String, Object> queryParams) {
+        DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
+        Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
+        Page<Reservation> reservations;
+        if(params.getStatus()==null){
+            reservations = reservationRepository.findAllByUserId(params.getUser(),  pageable);
+        }else{
+            reservations = reservationRepository.findAllByStatusAndUserId(params.getUser(), params.getStatus(),  pageable);
+        }
+
+        return new PageDTO<>(
+                reservations.getContent()
+                        .stream()
+                        .map(ReservationDTO::new)
+                        .collect(Collectors.toList()),
+                reservations.getTotalElements(),
+                params.getIndex(),
+                reservations.getContent().size()
+        );
     }
 }

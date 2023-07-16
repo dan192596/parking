@@ -86,7 +86,7 @@ public class VehicleDao implements IVehicleDao {
     public Optional<VehicleDTO> delete(Long id) {
         Optional<Vehicle> vehicleOptional = vehicleRepository.findById(id);
         vehicleOptional.ifPresent(vehicle -> {
-            List<Reservation> reservationList = reservationRepository.findAllByDatetime(new Date());
+            List<Reservation> reservationList = reservationRepository.findAllByDatetimeAndVehicleId(new Date(), id);
             if(reservationList.isEmpty()){
                 vehicle.setStatus(statusDefault.getDisabled());
                 vehicleRepository.save(vehicle);
@@ -94,7 +94,7 @@ public class VehicleDao implements IVehicleDao {
                 throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservación existente, no se puede eliminar");
             }
         });
-        return Optional.empty();
+        return vehicleOptional.map(VehicleDTO::new);
     }
 
     @Override
@@ -119,7 +119,7 @@ public class VehicleDao implements IVehicleDao {
     public PageDTO<List<VehicleDTO>> getAllVehicleByUserList(Map<String, Object> queryParams) {
         DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
         Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
-        Page<Vehicle> vehicles = vehicleRepository.findAllByUserId(params.getUser(), pageable);
+        Page<Vehicle> vehicles = vehicleRepository.findAllByUserIdAndStatus(params.getUser(),statusDefault.getEnabled(), pageable);
         return new PageDTO<>(
                 vehicles.getContent()
                         .stream()

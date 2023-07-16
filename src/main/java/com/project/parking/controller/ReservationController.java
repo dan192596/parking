@@ -80,4 +80,15 @@ public class ReservationController implements IReservationController {
         }
         return result;
     }
+
+    @Override
+    public DeferredResult<String> getAllAccountsByUserList(Map<String, Object> queryParams) {
+        DeferredResult<String> result = new DeferredResult<>();
+        try{
+            result.setResult(gson.toJson(reservationService.getAllReservationsByUserList(queryParams)));
+        }catch (Exception e){
+            result.setErrorResult(e);
+        }
+        return result;
+    }
 }

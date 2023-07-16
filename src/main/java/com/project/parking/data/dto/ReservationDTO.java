@@ -22,7 +22,6 @@ public class ReservationDTO {
     }
 
     private Long id;
-
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date start, end;
     private ParkingDTO parking;

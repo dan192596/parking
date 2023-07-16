@@ -43,4 +43,9 @@ public class ReservationService implements IReservationService {
     public Optional<ReservationDTO> insertObject(ReservationDTO object) {
         return reservationDao.insert(object);
     }
+
+    @Override
+    public PageDTO<List<ReservationDTO>> getAllReservationsByUserList(Map<String, Object> queryParams) {
+        return reservationDao.getAllReservationsByUserList(queryParams);
+    }
 }
