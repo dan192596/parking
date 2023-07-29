@@ -18,6 +18,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -64,9 +66,14 @@ public class ReservationDao implements IReservationDao {
     public Optional<ReservationDTO> update(Long id, ReservationDTO object) {
         Optional<Reservation> reservationOptional = reservationRepository.findById(id);
         reservationOptional.ifPresent(reservation -> {
-            reservation.setStartDatetime(object.getStart());
-            reservation.setEndDatetime(object.getEnd());
-            reservationRepository.save(reservation);
+            try {
+                reservation.setStartDatetime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(object.getStart()));
+                reservation.setEndDatetime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(object.getEnd()));
+                reservationRepository.save(reservation);
+            } catch (ParseException e) {
+                throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de fecha erroneo");
+            }
+
         });
         return reservationOptional.map(ReservationDTO::new);
     }
@@ -95,8 +102,12 @@ public class ReservationDao implements IReservationDao {
         }
 
         Reservation reservation = new Reservation();
-        reservation.setStartDatetime(object.getStart());
-        reservation.setEndDatetime(object.getEnd());
+        try {
+            reservation.setStartDatetime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(object.getStart()));
+            reservation.setEndDatetime(new SimpleDateFormat("yyyy-MM-dd HH:mm:ss").parse(object.getEnd()));
+        } catch (ParseException e) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Formato de fecha erroneo");
+        }
         reservation.setParking(parkingOptional.get());
         reservation.setVehicle(vehicleOptional.get());
         reservation.setStatus(statusDefault.getPending());

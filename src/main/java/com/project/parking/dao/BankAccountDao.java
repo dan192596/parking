@@ -127,7 +127,7 @@ public class BankAccountDao implements IBankAccountDao {
     public PageDTO<List<BankAccountDTO>> getAllAccountsByUserList(Map<String, Object> queryParams) {
         DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
         Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
-        Page<BankAccount> bankAccounts = accountRepository.findAllByUserId(params.getUser(), pageable);
+        Page<BankAccount> bankAccounts = accountRepository.findAllByUserIdAndStatus(params.getUser(), statusDefault.getEnabled(), pageable);
 
         return new PageDTO<>(
                 bankAccounts.getContent()

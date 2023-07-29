@@ -4,6 +4,7 @@ import com.project.parking.data.entity.Chat;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
@@ -11,10 +12,11 @@ import java.util.Date;
 public class ChatDTO {
 
     public ChatDTO(Chat chat){
+        SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         this.setId(chat.getId());
         this.setParking(new ParkingDTO(chat.getParking()));
         this.setUser(chat.getUser().getId());
-        this.setCreated(chat.getCreatedDatetime());
+        this.setCreated(format.format(chat.getCreatedDatetime()));
         this.setParkingId(chat.getParking().getId());
     }
 
@@ -22,5 +24,5 @@ public class ChatDTO {
     private ParkingDTO parking;
     private Long parkingId;
     private Long user;
-    private Date created;
+    private String created;
 }

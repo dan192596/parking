@@ -1,6 +1,7 @@
 package com.project.parking.data.repository;
 
 import com.project.parking.data.entity.BankAccount;
+import com.project.parking.data.entity.Status;
 import com.project.parking.data.entity.Vehicle;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -12,7 +13,7 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BankAccountRepository extends PagingAndSortingRepository<BankAccount, Long> {
-    Page<BankAccount> findAllByUserId(Long userId, Pageable pageable);
+    Page<BankAccount> findAllByUserIdAndStatus(Long userId, Status status, Pageable pageable);
     List<BankAccount> findAllByUserId(Long userId);
 
     @Query("SELECT ba FROM BankAccount ba " +
