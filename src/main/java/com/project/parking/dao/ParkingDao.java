@@ -96,4 +96,27 @@ public class ParkingDao implements IParkingDao {
         parking.setName(object.getName());
         return Optional.of(new ParkingDTO(parkingRepository.save(parking)));
     }
+
+    @Override
+    public PageDTO<List<ParkingDTO>> selectParkingConsole(Map<String, Object> queryParams) {
+        DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
+
+        Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
+        Page<Parking> parkings;
+        if(params.getSearch()!=null){
+            parkings = parkingRepository.findAllByNameAndOwner(params.getSearch(), params.getUser(), pageable);
+        }else{
+            parkings = parkingRepository.findAllByOwner(params.getUser(), pageable);
+        }
+
+        return new PageDTO<>(
+                parkings.getContent()
+                        .stream()
+                        .map(ParkingDTO::new)
+                        .collect(Collectors.toList()),
+                parkings.getTotalElements(),
+                params.getIndex(),
+                parkings.getContent().size()
+        );
+    }
 }

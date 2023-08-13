@@ -35,6 +35,11 @@ public class Parking {
     @JoinColumn(name = "status_id")
     private Status status;
 
+    @NotNull
+    @ManyToOne
+    @JoinColumn(name = "owner")
+    private User owner;
+
     @Column(name = "name")
     private String name;
 }

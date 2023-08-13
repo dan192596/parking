@@ -3,6 +3,7 @@ package com.project.parking.service;
 import com.project.parking.dao.behavior.IParkingDao;
 import com.project.parking.data.dto.PageDTO;
 import com.project.parking.data.dto.ParkingDTO;
+import com.project.parking.data.model.DefaultsParamsModel;
 import com.project.parking.service.behavior.IParkingService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,12 @@ public class ParkingService implements IParkingService {
 
     @Override
     public PageDTO<List<ParkingDTO>> getAllObject(Map<String, Object> queryParams) {
-        return parkingDao.select(queryParams);
+        DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
+        if(params.getUser()==null){
+            return parkingDao.select(queryParams);
+        }else{
+            return parkingDao.selectParkingConsole(queryParams);
+        }
     }
 
     @Override
