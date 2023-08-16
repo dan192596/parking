@@ -16,9 +16,9 @@ spring:
     time-zone: America/Guatemala
 
   datasource:
-    url: jdbc:mysql://localhost:33060/core
+    url: jdbc:mysql://3.12.123.213:33060/core
     username: root
-    password: test123
+    password: dNRiahnuPKixosJ4jADqh37kmvLPVKni26A
 
   mail:
     host: smtp.gmail.com

@@ -29,6 +29,8 @@ public class DefaultsParamsModel {
 
     private Long user;
 
+    private Long owner;
+
     private Long chat;
 
     private Long status;
@@ -44,6 +46,7 @@ public class DefaultsParamsModel {
         this.setUser(queryParams.containsKey("user") ? Long.valueOf((String) queryParams.get("user")) : null);
         this.setChat(queryParams.containsKey("chat") ? Long.valueOf((String) queryParams.get("chat")) : null);
         this.setStatus(queryParams.containsKey("status") ? Long.valueOf((String) queryParams.get("status")) : null);
+        this.setOwner(queryParams.containsKey("owner") ? Long.valueOf((String) queryParams.get("owner")) : null);
         try{
             this.setStartDate(queryParams.containsKey("startDate") ? new SimpleDateFormat("MM/dd/yyyy").parse((String) queryParams.get("startDate")) : null);
             this.setEndDate(queryParams.containsKey("endDate") ? new SimpleDateFormat("MM/dd/yyyy").parse((String) queryParams.get("endDate")) : null);

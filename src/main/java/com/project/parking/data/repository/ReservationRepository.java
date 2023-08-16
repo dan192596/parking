@@ -32,4 +32,8 @@ public interface ReservationRepository extends PagingAndSortingRepository<Reserv
             "WHERE re.vehicle.user.id = :userId ")
     Page<Reservation> findAllByUserId(@Param("userId") Long userId, Pageable pageable);
 
+    @Query("SELECT re FROM Reservation  re " +
+            "WHERE re.parking.owner.id = :userId ")
+    Page<Reservation> findAllByOwnerId(@Param("userId") Long userId, Pageable pageable);
+
 }

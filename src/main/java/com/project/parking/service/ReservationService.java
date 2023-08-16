@@ -3,6 +3,7 @@ package com.project.parking.service;
 import com.project.parking.dao.behavior.IReservationDao;
 import com.project.parking.data.dto.PageDTO;
 import com.project.parking.data.dto.ReservationDTO;
+import com.project.parking.data.model.DefaultsParamsModel;
 import com.project.parking.service.behavior.IReservationService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +22,12 @@ public class ReservationService implements IReservationService {
 
     @Override
     public PageDTO<List<ReservationDTO>> getAllObject(Map<String, Object> queryParams) {
-        return reservationDao.select(queryParams);
+        DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
+        if(params.getOwner()==null){
+            return reservationDao.select(queryParams);
+        }else{
+            return reservationDao.getReservationsByUserConsole(queryParams);
+        }
     }
 
     @Override
