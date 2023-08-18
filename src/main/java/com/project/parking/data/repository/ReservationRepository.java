@@ -39,7 +39,15 @@ public interface ReservationRepository extends PagingAndSortingRepository<Reserv
     Page<Reservation> findAllByOwnerId(@Param("userId") Long userId, Pageable pageable);
 
     static final String HAVERSINE_PART = "(6371 * acos(cos(radians(:latitude)) * cos(radians(re.parking.latitude)) * cos(radians(re.parking.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(re.parking.latitude))))";
-    @Query("SELECT re FROM Reservation re WHERE re.status = :status AND re.vehicle.user.id =:user ORDER BY "+HAVERSINE_PART+" ASC")
-    Page<Reservation> findReservationWithInDistance(@Param("latitude") double latitude, @Param("longitude") double longitude, @Param("status") Status status,@Param("user") Long user, Pageable pageable);
+    @Query("SELECT re FROM Reservation re WHERE re.status = :status AND re.vehicle.user.id =:user AND re.startDatetime > :start AND re.endDatetime < :end ORDER BY "+HAVERSINE_PART+" ASC")
+    Page<Reservation> findReservationWithInDistance(
+            @Param("latitude") double latitude,
+            @Param("longitude") double longitude,
+            @Param("status") Status status,
+            @Param("user") Long user,
+            @Param("start") Date start,
+            @Param("end") Date end,
+            Pageable pageable
+    );
 
 }

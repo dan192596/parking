@@ -54,8 +54,8 @@ public class DefaultsParamsModel {
         this.setLatitude(queryParams.containsKey("latitude") ? Float.valueOf((String) queryParams.get("latitude")) : null);
         this.setLongitude(queryParams.containsKey("longitude") ? Float.valueOf((String) queryParams.get("longitude")) : null);
         try{
-            this.setStartDate(queryParams.containsKey("startDate") ? new SimpleDateFormat("MM/dd/yyyy").parse((String) queryParams.get("startDate")) : null);
-            this.setEndDate(queryParams.containsKey("endDate") ? new SimpleDateFormat("MM/dd/yyyy").parse((String) queryParams.get("endDate")) : null);
+            this.setStartDate(queryParams.containsKey("startDate") ? new SimpleDateFormat("yyyy-MM-dd").parse((String) queryParams.get("startDate")) : null);
+            this.setEndDate(queryParams.containsKey("endDate") ? new SimpleDateFormat("yyyy-MM-dd").parse((String) queryParams.get("endDate")) : null);
         }catch (Exception e){
             this.setStartDate(null);
             this.setEndDate(null);

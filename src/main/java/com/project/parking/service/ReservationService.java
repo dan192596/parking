@@ -23,7 +23,7 @@ public class ReservationService implements IReservationService {
     @Override
     public PageDTO<List<ReservationDTO>> getAllObject(Map<String, Object> queryParams) {
         DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
-        if(params.getUser()!=null){
+        if(params.getOwner()!=null){
             return reservationDao.getReservationsByUserConsole(queryParams);
         }else if(params.getLongitude()!=null && params.getLongitude()!=null){
             return reservationDao.selectReservationByDistance(queryParams);
