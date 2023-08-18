@@ -119,4 +119,21 @@ public class ParkingDao implements IParkingDao {
                 parkings.getContent().size()
         );
     }
+
+    @Override
+    public PageDTO<List<ParkingDTO>> selectParkingByDistance(Map<String, Object> queryParams) {
+        DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
+        Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
+        Page<Parking> parkings = parkingRepository.findParkingWithInDistance(params.getLatitude(), params.getLongitude(), pageable);
+
+        return new PageDTO<>(
+                parkings.getContent()
+                        .stream()
+                        .map(ParkingDTO::new)
+                        .collect(Collectors.toList()),
+                parkings.getTotalElements(),
+                params.getIndex(),
+                parkings.getContent().size()
+        );
+    }
 }

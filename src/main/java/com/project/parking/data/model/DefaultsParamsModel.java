@@ -35,6 +35,10 @@ public class DefaultsParamsModel {
 
     private Long status;
 
+    private Float latitude;
+
+    private Float longitude;
+
     public DefaultsParamsModel(Map<String, Object> queryParams){
         this.setIndex(queryParams.containsKey("index") ? Integer.parseInt((String)queryParams.get("index")) : 0);
         this.setItems(queryParams.containsKey("items") ? Integer.parseInt((String) queryParams.get("items")) : 10);
@@ -47,6 +51,8 @@ public class DefaultsParamsModel {
         this.setChat(queryParams.containsKey("chat") ? Long.valueOf((String) queryParams.get("chat")) : null);
         this.setStatus(queryParams.containsKey("status") ? Long.valueOf((String) queryParams.get("status")) : null);
         this.setOwner(queryParams.containsKey("owner") ? Long.valueOf((String) queryParams.get("owner")) : null);
+        this.setLatitude(queryParams.containsKey("latitude") ? Float.valueOf((String) queryParams.get("latitude")) : null);
+        this.setLongitude(queryParams.containsKey("longitude") ? Float.valueOf((String) queryParams.get("longitude")) : null);
         try{
             this.setStartDate(queryParams.containsKey("startDate") ? new SimpleDateFormat("MM/dd/yyyy").parse((String) queryParams.get("startDate")) : null);
             this.setEndDate(queryParams.containsKey("endDate") ? new SimpleDateFormat("MM/dd/yyyy").parse((String) queryParams.get("endDate")) : null);

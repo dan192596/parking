@@ -23,10 +23,12 @@ public class ParkingService implements IParkingService {
     @Override
     public PageDTO<List<ParkingDTO>> getAllObject(Map<String, Object> queryParams) {
         DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
-        if(params.getUser()==null){
-            return parkingDao.select(queryParams);
-        }else{
+        if(params.getUser()!=null){
             return parkingDao.selectParkingConsole(queryParams);
+        }else if(params.getLatitude()!=null&&params.getLongitude()!=null){
+            return parkingDao.selectParkingByDistance(queryParams);
+        }else{
+            return parkingDao.select(queryParams);
         }
     }
 

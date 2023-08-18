@@ -17,4 +17,8 @@ public interface ParkingRepository extends PagingAndSortingRepository<Parking, L
     @Query("SELECT pa FROM Parking pa " +
             "WHERE pa.owner.id =:owner")
     Page<Parking> findAllByOwner(@Param("owner") Long owner, Pageable pageable);
+
+    static final String HAVERSINE_PART = "(6371 * acos(cos(radians(:latitude)) * cos(radians(p.latitude)) * cos(radians(p.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(p.latitude))))";
+    @Query("SELECT p FROM Parking p ORDER BY "+HAVERSINE_PART+" ASC")
+    Page<Parking> findParkingWithInDistance(@Param("latitude") double latitude, @Param("longitude") double longitude, Pageable pageable);
 }

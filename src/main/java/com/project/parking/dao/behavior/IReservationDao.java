@@ -11,4 +11,6 @@ public interface IReservationDao extends IMaintenanceDao<ReservationDTO, Long>{
     PageDTO<List<ReservationDTO>> getAllReservationsByUserList(Map<String, Object> queryParams);
 
     PageDTO<List<ReservationDTO>> getReservationsByUserConsole(Map<String, Object> queryParams);
+
+    PageDTO<List<ReservationDTO>> selectReservationByDistance(Map<String, Object> queryParams);
 }

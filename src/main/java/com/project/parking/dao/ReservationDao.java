@@ -141,7 +141,24 @@ public class ReservationDao implements IReservationDao {
 
         DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
         Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
-        Page<Reservation> reservations = reservationRepository.findAllByOwnerId(params.getOwner(), pageable);
+        Page<Reservation> reservations = reservationRepository.findAllByOwnerId(params.getUser(), pageable);
+
+        return new PageDTO<>(
+                reservations.getContent()
+                        .stream()
+                        .map(ReservationDTO::new)
+                        .collect(Collectors.toList()),
+                reservations.getTotalElements(),
+                params.getIndex(),
+                reservations.getContent().size()
+        );
+    }
+
+    @Override
+    public PageDTO<List<ReservationDTO>> selectReservationByDistance(Map<String, Object> queryParams) {
+        DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
+        Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
+        Page<Reservation> reservations = reservationRepository.findReservationWithInDistance(params.getLatitude(), params.getLongitude(),statusDefault.getPending(), params.getUser(), pageable);
 
         return new PageDTO<>(
                 reservations.getContent()

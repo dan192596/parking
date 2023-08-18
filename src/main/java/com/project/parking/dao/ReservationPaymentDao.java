@@ -121,7 +121,7 @@ public class ReservationPaymentDao implements IReservationPaymentDao {
     public PageDTO<List<ReservationPaymentDTO>> getPaymentsByUserConsole(Map<String, Object> queryParams) {
         DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
         Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
-        Page<ReservationPayment> reservationPayments = reservationPaymentRepository.findAll(pageable);
+        Page<ReservationPayment> reservationPayments = reservationPaymentRepository.findAllByOwnerId(params.getUser(), pageable);
 
         return new PageDTO<>(
                 reservationPayments.getContent()
