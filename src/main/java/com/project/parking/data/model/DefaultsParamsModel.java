@@ -21,6 +21,8 @@ public class DefaultsParamsModel {
 
     private Date endDate;
 
+    private Date date;
+
     private String search;
 
     private Integer month;
@@ -56,6 +58,7 @@ public class DefaultsParamsModel {
         try{
             this.setStartDate(queryParams.containsKey("startDate") ? new SimpleDateFormat("yyyy-MM-dd").parse((String) queryParams.get("startDate")) : null);
             this.setEndDate(queryParams.containsKey("endDate") ? new SimpleDateFormat("yyyy-MM-dd").parse((String) queryParams.get("endDate")) : null);
+            this.setDate(queryParams.containsKey("date") ? new SimpleDateFormat("yyyy-MM-dd").parse((String) queryParams.get("date")) : null);
         }catch (Exception e){
             this.setStartDate(null);
             this.setEndDate(null);

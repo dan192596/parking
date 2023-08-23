@@ -159,7 +159,17 @@ public class ReservationDao implements IReservationDao {
         DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
         Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
 
-        Page<Reservation> reservations = reservationRepository.findReservationWithInDistance(
+        Page<Reservation> reservations;
+
+        if(params.getDate()!=null) {
+            params.setStartDate(params.getDate());//Fecha de inicio
+            Calendar c = Calendar.getInstance();
+            c.setTime(params.getDate());
+            c.add(Calendar.DATE, 1);
+            params.setEndDate(c.getTime());//Fecha de fin +1
+        }
+
+        reservations = reservationRepository.findReservationWithInDistance(
                 params.getLatitude(),
                 params.getLongitude(),
                 statusDefault.getPending(),
