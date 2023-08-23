@@ -87,27 +87,27 @@ public class ReservationPaymentDao implements IReservationPaymentDao {
     public Optional<ReservationPaymentDTO> insert(ReservationPaymentDTO object) {
         Optional<Reservation> reservationOptional = reservationRepository.findById(object.getReservation());
         if(!reservationOptional.isPresent()){
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "Reservacion inexistente");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservacion inexistente");
         }
         Reservation reservation = reservationOptional.get();
         if(reservationOptional.get().getStatus().equals(statusDefault.getPayed())){
-            throw new ResponseStatusException(HttpStatus.ALREADY_REPORTED, "Reservacion ya pagada");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Reservacion ya pagada");
         }
         Optional<BankAccount> bankAccountOptional = bankAccountRepository.findPrincipalByUserId(reservation.getVehicle().getUser().getId());
         if(!bankAccountOptional.isPresent()){
-            throw new ResponseStatusException(HttpStatus.NO_CONTENT, "No se encontro cuenta bancaria para realizar el pago");
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "No se encontro cuenta bancaria para realizar el pago");
         }
         //Calculation of the total
-        Float valueHour = reservation.getParking().getPrice_hour();
-        System.out.println(new Date());
-        System.out.println(new Date().getTime());
-        System.out.println(reservation.getStartDatetime());
-        System.out.println(reservation.getStartDatetime().getTime());
-        Long hours = TimeUnit.MILLISECONDS.toHours(new Date().getTime() - reservation.getStartDatetime().getTime());
-        System.out.println("Precio por hora "+valueHour+" horas transcurridas "+hours+" y el total es "+valueHour*hours);
+//        Float valueHour = reservation.getParking().getPrice_hour();
+//        System.out.println(new Date());
+//        System.out.println(new Date().getTime());
+//        System.out.println(reservation.getStartDatetime());
+//        System.out.println(reservation.getStartDatetime().getTime());
+//        Long hours = TimeUnit.MILLISECONDS.toHours(new Date().getTime() - reservation.getStartDatetime().getTime());
+//        System.out.println("Precio por hora "+valueHour+" horas transcurridas "+hours+" y el total es "+valueHour*hours);
         //Saving payment
         ReservationPayment reservationPayment = new ReservationPayment();
-        reservationPayment.setTotal(hours*valueHour);
+        reservationPayment.setTotal(object.getTotal());
         reservationPayment.setReservation(reservationOptional.get());
         reservationPayment.setBankAccount(bankAccountOptional.get());
         reservationPayment.setStatus(statusDefault.getPayed());
