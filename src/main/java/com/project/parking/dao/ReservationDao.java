@@ -178,8 +178,8 @@ public class ReservationDao implements IReservationDao {
         reservations = reservationRepository.findReservationWithInDistance(
                 params.getLatitude(),
                 params.getLongitude(),
-                statusDefault.getPending(),
-                statusDefault.getPayed(),
+//                statusDefault.getPayed(),
+//                statusDefault.getPayed(),
                 params.getUser(),
                 params.getStartDate(),
                 params.getEndDate(),
@@ -189,6 +189,7 @@ public class ReservationDao implements IReservationDao {
         return new PageDTO<>(
                 reservations.getContent()
                         .stream()
+                        .filter(reservation -> reservation.getStatus().getId()==5 || reservation.getStatus().getId()==3)
                         .map(ReservationDTO::new)
                         .collect(Collectors.toList()),
                 reservations.getTotalElements(),
