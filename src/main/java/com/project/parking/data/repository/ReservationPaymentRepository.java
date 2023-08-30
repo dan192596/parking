@@ -13,4 +13,9 @@ public interface ReservationPaymentRepository extends PagingAndSortingRepository
     @Query("SELECT re FROM ReservationPayment re " +
             "WHERE re.reservation.parking.owner.id = :userId ")
     Page<ReservationPayment> findAllByOwnerId(@Param("userId") Long userId, Pageable pageable);
+
+    @Query("SELECT re FROM ReservationPayment re " +
+            "WHERE re.reservation.parking.owner.id = :userId " +
+            "AND re.reservation.id = :search ")
+    Page<ReservationPayment> findAllByOwnerIdAndSearch(@Param("userId") Long userId, @Param("search")Long search, Pageable pageable);
 }

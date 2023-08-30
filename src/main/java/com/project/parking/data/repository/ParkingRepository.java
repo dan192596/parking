@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 public interface ParkingRepository extends PagingAndSortingRepository<Parking, Long> {
 
     @Query("SELECT pa FROM Parking pa " +
-            "WHERE pa.name =:search " +
+            "WHERE pa.name like %:search% " +
             "AND pa.owner.id =:owner")
     Page<Parking> findAllByNameAndOwner(@Param("search") String search,@Param("owner") Long owner, Pageable pageable);
 

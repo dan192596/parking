@@ -80,4 +80,15 @@ public class ParkingController implements IParkingController {
         }
         return result;
     }
+
+    @Override
+    public DeferredResult<Optional<ParkingDTO>> restoreObjectById(Long id) {
+        DeferredResult<Optional<ParkingDTO>> result = new DeferredResult<>();
+        try{
+            result.setResult(parkingService.restoreObjectById(id));
+        }catch (Exception e){
+            result.setErrorResult(e);
+        }
+        return result;
+    }
 }

@@ -51,4 +51,9 @@ public class ParkingService implements IParkingService {
     public Optional<ParkingDTO> insertObject(ParkingDTO object) {
         return parkingDao.insert(object);
     }
+
+    @Override
+    public Optional<ParkingDTO> restoreObjectById(Long id) {
+        return parkingDao.restore(id);
+    }
 }

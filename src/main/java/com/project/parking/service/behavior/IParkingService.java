@@ -10,5 +10,5 @@ import javax.validation.Valid;
 import java.util.Optional;
 
 public interface IParkingService extends IMaintenanceService<ParkingDTO, Long> {
-
+    Optional<ParkingDTO> restoreObjectById(Long id);
 }

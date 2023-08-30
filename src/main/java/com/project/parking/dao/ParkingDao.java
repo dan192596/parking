@@ -12,6 +12,7 @@ import com.project.parking.data.entity.User;
 import com.project.parking.data.entity.Vehicle;
 import com.project.parking.data.model.DefaultsParamsModel;
 import com.project.parking.data.repository.ParkingRepository;
+import com.project.parking.data.repository.UserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -33,6 +34,9 @@ public class ParkingDao implements IParkingDao {
 
     @NonNull
     private final ParkingRepository parkingRepository;
+
+    @NonNull
+    private final UserRepository userRepository;
 
     @NonNull
     private final StatusDefault statusDefault;
@@ -87,6 +91,11 @@ public class ParkingDao implements IParkingDao {
 
     @Override
     public Optional<ParkingDTO> insert(ParkingDTO object) {
+        Optional<User> userOptional = userRepository.findById(object.getOwner());
+        if(!userOptional.isPresent()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Owner inexistente");
+        }
+
         Parking parking = new Parking();
         parking.setLocation(object.getLocation());
         parking.setLatitude(object.getLatitude());
@@ -94,6 +103,7 @@ public class ParkingDao implements IParkingDao {
         parking.setPrice_hour(object.getPriceHour());
         parking.setStatus(statusDefault.getEnabled());
         parking.setName(object.getName());
+        parking.setOwner(userOptional.get());
         return Optional.of(new ParkingDTO(parkingRepository.save(parking)));
     }
 
@@ -135,5 +145,19 @@ public class ParkingDao implements IParkingDao {
                 params.getIndex(),
                 parkings.getContent().size()
         );
+    }
+
+    @Override
+    public Optional<ParkingDTO> restore(Long id) {
+        Optional<Parking> parkingOptional = parkingRepository.findById(id);
+        if(!parkingOptional.isPresent()){
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Parqueo inexistente");
+        }
+        parkingOptional.ifPresent(parking -> {
+            parking.setStatus(statusDefault.getEnabled());
+            parkingRepository.save(parking);
+
+        });
+        return Optional.of(new ParkingDTO(parkingRepository.save(parkingOptional.get())));
     }
 }

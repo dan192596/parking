@@ -38,12 +38,23 @@ public interface ReservationRepository extends PagingAndSortingRepository<Reserv
             "WHERE re.parking.owner.id = :userId ")
     Page<Reservation> findAllByOwnerId(@Param("userId") Long userId, Pageable pageable);
 
+    @Query("SELECT re FROM Reservation  re " +
+            "WHERE re.parking.owner.id = :userId " +
+            "AND re.vehicle.plate =:vehicle")
+    Page<Reservation> findAllByOwnerIdAndVehicle(@Param("userId") Long userId, @Param("vehicle") String vehicle, Pageable pageable);
+
     static final String HAVERSINE_PART = "(6371 * acos(cos(radians(:latitude)) * cos(radians(re.parking.latitude)) * cos(radians(re.parking.longitude) - radians(:longitude)) + sin(radians(:latitude)) * sin(radians(re.parking.latitude))))";
-    @Query("SELECT re FROM Reservation re WHERE re.status = :status AND re.vehicle.user.id =:user AND re.startDatetime > :start AND re.endDatetime < :end ORDER BY "+HAVERSINE_PART+" ASC")
+    @Query("SELECT re FROM Reservation re " +
+            "WHERE re.status = :status OR re.status = :status2 " +
+            "AND re.vehicle.user.id =:user " +
+            "AND re.startDatetime > :start " +
+            "AND re.endDatetime < :end " +
+            "ORDER BY "+HAVERSINE_PART+" ASC")
     Page<Reservation> findReservationWithInDistance(
             @Param("latitude") double latitude,
             @Param("longitude") double longitude,
             @Param("status") Status status,
+            @Param("status2") Status status2,
             @Param("user") Long user,
             @Param("start") Date start,
             @Param("end") Date end,

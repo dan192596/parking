@@ -23,4 +23,5 @@ public class ParkingDTO {
     private Float priceHour;
     private StatusDTO status;
     private String name;
+    private Long owner;
 }

@@ -141,7 +141,13 @@ public class ReservationDao implements IReservationDao {
 
         DefaultsParamsModel params = new DefaultsParamsModel(queryParams);
         Pageable pageable = PageRequest.of(params.getIndex(), params.getItems()<0?10:params.getItems(), params.getDirection().equals("ASC") ? Sort.by(params.getSort()).ascending() : Sort.by(params.getSort()).descending());
-        Page<Reservation> reservations = reservationRepository.findAllByOwnerId(params.getOwner(), pageable);
+        Page<Reservation> reservations;
+
+        if(params.getSearch()!=null){
+            reservations = reservationRepository.findAllByOwnerIdAndVehicle(params.getOwner(), params.getSearch(), pageable);
+        }else{
+            reservations = reservationRepository.findAllByOwnerId(params.getOwner(), pageable);
+        }
 
         return new PageDTO<>(
                 reservations.getContent()
@@ -173,6 +179,7 @@ public class ReservationDao implements IReservationDao {
                 params.getLatitude(),
                 params.getLongitude(),
                 statusDefault.getPending(),
+                statusDefault.getPayed(),
                 params.getUser(),
                 params.getStartDate(),
                 params.getEndDate(),
